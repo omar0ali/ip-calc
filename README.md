@@ -45,4 +45,5 @@ go run .
 
 ### Features to add
 
--   [ ] Divide a subnet equally
+-   [ ] Divide a subnet equally i.e `go run . 10.0.0.0 255.0.0.0 --Divide 4` this is a CIDR 16
+-   [ ] Use https://github.com/spf13/cobra for more CLI features
