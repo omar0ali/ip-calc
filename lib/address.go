@@ -13,7 +13,7 @@ type Address struct {
 /*
 Creates Address in Binary,
 */
-func CreateAddressInBinary(a string, b string, c string, d string) Address {
+func CreateAddressInBinary(a string, b string, c string, d string) *Address {
 	o1, err := CreateOctet(a)
 	if err != nil {
 		panic(err)
@@ -30,7 +30,7 @@ func CreateAddressInBinary(a string, b string, c string, d string) Address {
 	if err != nil {
 		panic(err)
 	}
-	return Address{
+	return &Address{
 		address: [4]Octet{o1, o2, o3, o4},
 	}
 }
@@ -61,12 +61,13 @@ func (adrs *Address) SetSubnetInBinary(a string, b string, c string, d string) {
 /*
 Creates Address in Decimal,
 */
-func CreateAddress(a uint8, b uint8, c uint8, d uint8) Address {
+func CreateAddress(a uint8, b uint8, c uint8, d uint8) *Address {
 	return CreateAddressInBinary(toStr(a), toStr(b), toStr(c), toStr(d))
 }
 
-func (adrs *Address) SetSubnet(a uint8, b uint8, c uint8, d uint8) {
+func (adrs *Address) SetSubnet(a uint8, b uint8, c uint8, d uint8) *Address {
 	adrs.SetSubnetInBinary(toStr(a), toStr(b), toStr(c), toStr(d))
+	return adrs
 }
 
 /*
@@ -180,4 +181,29 @@ func (a Address) GetTotalHosts() uint {
 
 func (a Address) GetUsableHosts() uint {
 	return a.GetTotalHosts() - 2
+}
+
+func (a *Address) SetCIDR(cidr uint8) *Address {
+	if cidr > 28 {
+		panic("Classless Inter-Domain Routing (CIDR) must not be more than 28.")
+	}
+	counter := 0
+	var builder strings.Builder
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 8; j++ {
+			if counter < int(cidr) {
+				builder.WriteString("1")
+			} else {
+				builder.WriteString("0")
+			}
+			counter += 1
+		}
+		tempOctet, err := CreateOctet(builder.String())
+		if err != nil {
+			panic(err)
+		}
+		a.subnet[i].octet = tempOctet.octet
+		builder.Reset()
+	}
+	return a
 }
