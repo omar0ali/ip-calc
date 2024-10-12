@@ -71,4 +71,4 @@ go run .
 
 -   [ ] Use https://github.com/spf13/cobra for more CLI features i.e `go run . 10.0.0.0/16` instead of relaying on editing main.go file every time.
 -   [x] Divide a subnet equally i.e `go run . 10.0.0.0 255.0.0.0 --divide 4` this is a CIDR 16
--   [] Writing test cases
+-   [ ] Writing test cases
