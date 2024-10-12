@@ -17,7 +17,7 @@ func main() {
 	fmt.Printf("Range: %v\n", address.GetRangeOfAvailableHosts())
 	fmt.Printf("Total Hosts: %v\n", address.GetTotalHosts())
 	fmt.Printf("Usable Hosts: %v\n", address.GetUsableHosts())
-	listOfaddresses := address.DivideEvenlyBy(9) //Still work in progress
+	listOfaddresses := address.DivideEvenlyBy(4) //Still work in progress
 	fmt.Printf("---- Division Evenly by %v ----\n", len(listOfaddresses))
 	for _, i := range listOfaddresses {
 		fmt.Println(i.GetNetworkAddres(), "/", i.GetCIDR(), "<-Range->", i.GetRangeOfAvailableHosts())

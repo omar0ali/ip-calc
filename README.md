@@ -43,6 +43,24 @@ func main() {
 }
 ```
 
+-   Example **Output**
+
+```
+Internet Protocal: 10.0.0.0
+Subnetmask: 255.255.0.0
+Network Address: 10.0.0.0
+CIDR: 16
+Broadcast Address: 10.0.255.255
+Range: 10.0.0.1 - 10.0.255.254
+Total Hosts: 65536
+Usable Hosts: 65534
+---- Division Evenly by 4 ----
+10.0.0.0 / 18 <-Range-> 10.0.0.1 - 10.0.63.254
+10.0.64.0 / 18 <-Range-> 10.0.64.1 - 10.0.127.254
+10.0.128.0 / 18 <-Range-> 10.0.128.1 - 10.0.191.254
+10.0.192.0 / 18 <-Range-> 10.0.192.1 - 10.0.255.254
+```
+
 5. To start the app
 
 ```bash
