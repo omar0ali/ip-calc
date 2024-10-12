@@ -87,6 +87,19 @@ func toStr(octet uint8) string {
 	return builder.String()
 }
 
+func getCurrentOctetUnder(cidr uint8) int8 {
+	if cidr > 0 && cidr <= 8 {
+		return 0
+	} else if cidr > 8 && cidr <= 16 {
+		return 1
+	} else if cidr > 16 && cidr <= 24 {
+		return 2
+	} else if cidr > 24 && cidr <= 32 {
+		return 3
+	}
+	return -1
+}
+
 func (a Address) GetIPAddress() string {
 	return fmt.Sprintf("%v.%v.%v.%v", a.address[0].GetDecimal(), a.address[1].GetDecimal(), a.address[2].GetDecimal(), a.address[3].GetDecimal())
 }
@@ -181,6 +194,45 @@ func (a Address) GetTotalHosts() uint {
 
 func (a Address) GetUsableHosts() uint {
 	return a.GetTotalHosts() - 2
+}
+
+// This divides the subnet evenly and only accept even numbers, 2, 4, 8, 16
+func (a Address) DivideEvenlyBy(num uint8) []Address {
+	var addresses = []Address{}
+	startDiv := 1
+	counter := 1
+	octetDecimalRefrence := []uint8{128, 64, 32, 16, 8, 2, 1}
+	for i := uint8(a.GetCIDR()); i < 32; i++ {
+		startDiv = startDiv * 2
+		if num <= uint8(startDiv) {
+			break
+		}
+		counter++
+	}
+	// fmt.Println("New CIDR: ", uint8(a.GetCIDR()+uint8(counter)))
+	// fmt.Println("Open Subnets: ", startDiv)
+	i := 0
+	var octet []uint8
+	for i <= 255 {
+		octet = append(octet, uint8(i))
+		i = i + int(octetDecimalRefrence[counter-1])
+	}
+	for i := 0; i < startDiv; i++ {
+		var octets []uint8
+		for octetIndex, j := range a.GetNetworkAddresInBinary() {
+			if octetIndex == int(getCurrentOctetUnder(uint8(a.GetCIDR()+1))) {
+				// fmt.Printf("%v.", octet[i])
+				octets = append(octets, octet[i])
+			} else {
+				// fmt.Printf("%v.", j.GetDecimal())
+				octets = append(octets, uint8(j.GetDecimal()))
+			}
+		}
+
+		addresses = append(addresses, *CreateAddress(octets[0], octets[1], octets[2], octets[3]).SetCIDR(uint8(a.GetCIDR() + uint8(counter))))
+		// fmt.Printf("/%v\n", uint8(a.GetCIDR()+uint8(counter)))
+	}
+	return addresses
 }
 
 func (a *Address) SetCIDR(cidr uint8) *Address {

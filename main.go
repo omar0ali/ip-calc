@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	address := lib.CreateAddress(10, 0, 0, 0).SetCIDR(24)
+	address := lib.CreateAddress(10, 0, 0, 0).SetCIDR(16)
 	// address.SetSubnet(255, 255, 255, 0)
 	fmt.Printf("Internet Protocal: %v\n", address.GetIPAddress())
 	fmt.Printf("Subnetmask: %v\n", address.GetSubnet())
@@ -17,4 +17,9 @@ func main() {
 	fmt.Printf("Range: %v\n", address.GetRangeOfAvailableHosts())
 	fmt.Printf("Total Hosts: %v\n", address.GetTotalHosts())
 	fmt.Printf("Usable Hosts: %v\n", address.GetUsableHosts())
+	listOfaddresses := address.DivideEvenlyBy(9) //Still work in progress
+	fmt.Printf("---- Division Evenly by %v ----\n", len(listOfaddresses))
+	for _, i := range listOfaddresses {
+		fmt.Println(i.GetNetworkAddres(), "/", i.GetCIDR(), "<-Range->", i.GetRangeOfAvailableHosts())
+	}
 }

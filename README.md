@@ -24,8 +24,8 @@ cd ip-calc
 ```golang
 ...
 func main() {
-	address := lib.CreateAddress(10, 0, 0, 0) // This can be edited
-	address.SetSubnet(255, 255, 255, 0) // This can be edited
+	address := lib.CreateAddress(10, 0, 0, 0).SetCIDR(24)
+	// address.SetSubnet(255, 255, 255, 0)
 	fmt.Printf("Internet Protocal: %v\n", address.GetIPAddress())
 	fmt.Printf("Subnetmask: %v\n", address.GetSubnet())
 	fmt.Printf("Network Address: %v\n", address.GetNetworkAddres())
@@ -34,6 +34,12 @@ func main() {
 	fmt.Printf("Range: %v\n", address.GetRangeOfAvailableHosts())
 	fmt.Printf("Total Hosts: %v\n", address.GetTotalHosts())
 	fmt.Printf("Usable Hosts: %v\n", address.GetUsableHosts())
+    // The following block is not fully tested
+    listOfaddresses := address.DivideEvenlyBy(4)
+    fmt.Printf("---- Division Evenly by %v ----\n", len(listOfaddresses))
+	for _, i := range listOfaddresses {
+		fmt.Println(i.GetNetworkAddres(), "/", i.GetCIDR(), "<-Range->", i.GetRangeOfAvailableHosts())
+	}
 }
 ```
 
@@ -46,4 +52,5 @@ go run .
 ### Features to add
 
 -   [ ] Use https://github.com/spf13/cobra for more CLI features i.e `go run . 10.0.0.0/16` instead of relaying on editing main.go file every time.
--   [ ] Divide a subnet equally i.e `go run . 10.0.0.0 255.0.0.0 --Divide 4` this is a CIDR 16
+-   [x] Divide a subnet equally i.e `go run . 10.0.0.0 255.0.0.0 --divide 4` this is a CIDR 16
+-   [] Writing test cases
