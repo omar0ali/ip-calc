@@ -10,7 +10,7 @@
 2. Clone the repo
 
 ```bash
-git clone git@github.com:omar0ali/ip-clac.git
+git clone git@github.com:omar0ali/ip-calc.git
 ```
 
 3. Get into the ip-calc directory

@@ -20,6 +20,6 @@ func main() {
 	listOfaddresses := address.DivideEvenlyBy(4) //Still work in progress
 	fmt.Printf("---- Division Evenly by %v ----\n", len(listOfaddresses))
 	for _, i := range listOfaddresses {
-		fmt.Println(i.GetNetworkAddres(), "/", i.GetCIDR(), "<-Range->", i.GetRangeOfAvailableHosts())
+		fmt.Println(i.GetNetworkAddres(), "/", i.GetCIDR(), "<-Range->\t", i.GetRangeOfAvailableHosts(), "\tBroadCast:", i.GetBroadCastAddres())
 	}
 }
