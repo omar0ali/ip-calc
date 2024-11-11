@@ -1,6 +1,13 @@
 # ip-calc
+## IP Calculator
+This command-line tool helps you analyze IP networks. It allows you to:
+1. View detailed information about an IP address and its network (including subnet mask, network address, CIDR notation, broadcast address, and the range of usable hosts).
+2. Divide a given IP network into smaller subnets, allowing you to create and visualize multiple subnets based on a specified number of divisions.
 
-### How to use
+>[!NOTE]
+The subnet division feature is in an experimental stage (alpha), and the calculations may not always be accurate. Use at your own risk.
+
+## Setup
 
 1. Make sure golang is installed.
 
@@ -19,56 +26,35 @@ git clone git@github.com:omar0ali/ip-calc.git
 cd ip-calc
 ```
 
-4. Before starting the app, you can view `main.go` get to know how everything is working, you can modify and set ip address to see the results
-
-```golang
-...
-func main() {
-	address := lib.CreateAddress(10, 0, 0, 0).SetCIDR(24)
-	// address.SetSubnet(255, 255, 255, 0)
-	fmt.Printf("Internet Protocal: %v\n", address.GetIPAddress())
-	fmt.Printf("Subnetmask: %v\n", address.GetSubnet())
-	fmt.Printf("Network Address: %v\n", address.GetNetworkAddres())
-	fmt.Printf("CIDR: %v\n", address.GetCIDR())
-	fmt.Printf("Broadcast Address: %v\n", address.GetBroadCastAddres())
-	fmt.Printf("Range: %v\n", address.GetRangeOfAvailableHosts())
-	fmt.Printf("Total Hosts: %v\n", address.GetTotalHosts())
-	fmt.Printf("Usable Hosts: %v\n", address.GetUsableHosts())
-    // The following block is not fully tested
-    listOfaddresses := address.DivideEvenlyBy(4)
-    fmt.Printf("---- Division Evenly by %v ----\n", len(listOfaddresses))
-	for _, i := range listOfaddresses {
-		fmt.Println(i.GetNetworkAddres(), "/", i.GetCIDR(), "<-Range->", i.GetRangeOfAvailableHosts())
-	}
-}
-```
-
--   Example **Output**
+### Usage
 
 ```
-Internet Protocal: 10.0.0.0
-Subnetmask: 255.255.0.0
-Network Address: 10.0.0.0
-CIDR: 16
-Broadcast Address: 10.0.255.255
-Range: 10.0.0.1 - 10.0.255.254
-Total Hosts: 65536
-Usable Hosts: 65534
----- Division Evenly by 4 ----
-10.0.0.0 / 18 <-Range-> 10.0.0.1 - 10.0.63.254
-10.0.64.0 / 18 <-Range-> 10.0.64.1 - 10.0.127.254
-10.0.128.0 / 18 <-Range-> 10.0.128.1 - 10.0.191.254
-10.0.192.0 / 18 <-Range-> 10.0.192.1 - 10.0.255.254
-```
+Usage:
+        ip-calc <ip-address>/CIDR
+          - Displays details of the IP address and network.
+        ip-calc <ip-address>/CIDR <subnet-count>
+          - Displays details of the IP address and network, and divides the subnet into the specified number of smaller subnets.
 
-5. To start the app
+Example 1: ip-calc 192.168.0.0/24
+        Displays details of the network: IP address, subnet mask, CIDR, broadcast address, range of hosts, total hosts, and usable hosts.
+
+Example 2: ip-calc 192.168.0.0/24 4
+        Divides the network into 4 subnets and shows the subnets' range, broadcast address, and CIDR.
+```
 
 ```bash
-go run .
+go run . 192.168.0.0/24
 ```
 
-### Features to add
+**OUTPUT**
 
--   [ ] Use https://github.com/spf13/cobra for more CLI features i.e `go run . 10.0.0.0/16` instead of relaying on editing main.go file every time.
--   [x] Divide a subnet equally i.e `go run . 10.0.0.0 255.0.0.0 --divide 4` this is a CIDR 16
--   [ ] Writing test cases
+```
+Internet Protocol: 192.168.0.0
+Subnetmask: 255.255.255.0
+Network Address: 192.168.0.0
+CIDR: 24
+Broadcast Address: 192.168.0.255
+Range: 192.168.0.1 - 192.168.0.254
+Total Hosts: 256
+Usable Hosts: 254
+```
