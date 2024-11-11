@@ -4,6 +4,10 @@ This command-line tool helps you analyze IP networks. It allows you to:
 1. View detailed information about an IP address and its network (including subnet mask, network address, CIDR notation, broadcast address, and the range of usable hosts).
 2. Divide a given IP network into smaller subnets, allowing you to create and visualize multiple subnets based on a specified number of divisions.
 
+
+### Download the Pre-release:
+You can download the pre-release version from the [GitHub Releases Page](https://github.com/omar0ali/ip-calc/releases/tag/v0.9).
+
 >[!NOTE]
 The subnet division feature is in an experimental stage (alpha), and the calculations may not always be accurate. Use at your own risk.
 
