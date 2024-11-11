@@ -1,6 +1,4 @@
-ip-calc
-ip-calc.exe
-
+ip-calc*
 *.exe
 *.out
 *.o
