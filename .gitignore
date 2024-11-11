@@ -1,11 +1,6 @@
-# Ignore Go binaries
 ip-calc
 ip-calc.exe
 
-# Ignore all binaries regardless of name (optional)
 *.exe
 *.out
 *.o
-
-# Ignore vendor directory if you have one (optional)
-/vendor/
