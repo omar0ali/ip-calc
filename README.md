@@ -1,5 +1,5 @@
 # ip-calc
-## IP Calculator
+## Internet Protocol Calculator
 This command-line tool helps you analyze IP networks. It allows you to:
 1. View detailed information about an IP address and its network (including subnet mask, network address, CIDR notation, broadcast address, and the range of usable hosts).
 2. Divide a given IP network into smaller subnets, allowing you to create and visualize multiple subnets based on a specified number of divisions.
