@@ -2,3 +2,4 @@ ip-calc*
 *.exe
 *.out
 *.o
+tasks.json
